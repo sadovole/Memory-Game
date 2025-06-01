@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Game — Play</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Memory Game</h1>
+    <button id="logout-btn">Logout</button>
+  </header>
+
+  <main>
+    <section class="game-info">
+      <div>
+        <label for="difficulty-select">Difficulty:</label>
+        <select id="difficulty-select">
+          <option value="4x4" selected>4 × 4 (8 Pairs)</option>
+          <option value="4x6">4 × 6 (12 Pairs)</option>
+          <option value="6x6">6 × 6 (18 Pairs)</option>
+        </select>
+      </div>
+      <p>Player: <span id="player-name"></span></p>
+      <p>Moves: <span id="move-count">0</span></p>
+      <p>Time: <span id="timer">00:00</span></p>
+      <p id="offline-status-game" class="hidden">
+        You are offline. Results will not be saved.
+      </p>
+    </section>
+
+    <!-- Grid container for cards -->
+    <section class="game-board">
+      <div id="game-grid" class="game-grid"></div>
+    </section>
+
+    <!-- Modal shown when game ends -->
+    <div id="game-over-modal" class="modal hidden">
+      <div class="modal-content">
+        <h2>Game Over!</h2>
+        <p>Your Time: <span id="final-time"></span></p>
+        <p>Your Moves: <span id="final-moves"></span></p>
+        <button id="save-result-btn">Save Result</button>
+        <button id="play-again-btn">Play Again</button>
+      </div>
+    </div>
+
+    <!-- Audio elements -->
+    <audio id="flip-sound" src="assets/audio/flip.mp3" preload="auto"></audio>
+    <audio id="match-sound" src="assets/audio/match.mp3" preload="auto"></audio>
+    <audio id="bg-music" src="assets/audio/background.mp3" loop></audio>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="current-year-game"></span> Memory Game.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

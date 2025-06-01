@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Game — Login / Register</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Memory Game</h1>
+    <p id="user-location"></p>
+  </header>
+
+  <main>
+    <section class="auth-section">
+      <form id="auth-form">
+        <fieldset>
+          <legend>Login / Register</legend>
+
+          <label for="username">Username:</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            required
+            placeholder="Enter username"
+            autofocus
+          />
+
+          <label for="password">Password:</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            required
+            placeholder="Enter password"
+          />
+
+          <button type="submit">Login / Register</button>
+        </fieldset>
+      </form>
+      <p id="offline-status" class="hidden">
+        You are offline. Authorization check is unavailable.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="current-year"></span> Memory Game. All rights reserved.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>

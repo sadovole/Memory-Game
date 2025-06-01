@@ -1,0 +1,345 @@
+/* ============================================
+   Hiding class — ensures elements with 'hidden' are not visible
+   ============================================ */
+   .hidden {
+    display: none !important;
+  }
+  
+  /* ============================================
+     Global styles
+     ============================================ */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+  }
+  
+  .site-header {
+    background-color: #444;
+    color: #fff;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .site-header h1 {
+    font-size: 1.5rem;
+  }
+  
+  .site-header button {
+    background: #ff9800;
+    border: none;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .site-header button:hover {
+    transform: scale(1.05);
+  }
+  
+  main {
+    padding: 1rem;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #eee;
+  }
+  
+  /* ============================================
+     Styles for Login/Register form
+     ============================================ */
+  .auth-section {
+    max-width: 400px;
+    margin: 2rem auto;
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .auth-section fieldset {
+    border: none;
+  }
+  
+  .auth-section legend {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .auth-section label {
+    display: block;
+    margin-top: 1rem;
+  }
+  
+  .auth-section input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  .auth-section button {
+    margin-top: 1.5rem;
+    width: 100%;
+    background-color: #4caf50;
+    padding: 0.7rem;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .auth-section button:hover {
+    background-color: #45a049;
+  }
+  
+  #offline-status {
+    color: red;
+    margin-top: 1rem;
+  }
+  
+  /* ============================================
+     Styles for Game page
+     ============================================ */
+  .game-info {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .game-info p,
+  .game-info label {
+    font-size: 1.1rem;
+  }
+  
+  #difficulty-select {
+    padding: 0.3rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+  
+  .game-board {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .game-grid {
+    display: grid;
+    gap: 10px;
+  }
+  
+  .game-grid.size-4x4 {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 600px;
+  }
+  
+  .game-grid.size-4x6 {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 800px;
+  }
+  
+  .game-grid.size-6x6 {
+    grid-template-columns: repeat(6, 1fr);
+    max-width: 900px;
+  }
+  
+  .card {
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* 1:1 aspect ratio */
+    perspective: 1000px;
+    cursor: pointer;
+  }
+  
+  .card__inner {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+  
+  .card.flipped .card__inner {
+    transform: rotateY(180deg);
+  }
+  
+  .card__face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .card__face--front {
+    background-color: #2196f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .card__face--back {
+    background-color: #fff;
+    transform: rotateY(180deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #444;
+  }
+  
+  .card__face--back img {
+    width: 60%;
+    height: 60%;
+  }
+  
+  /* Flip sound and match animations remain via JS */
+  
+  /* Modal styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .modal-content {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  .modal-content button {
+    margin: 0.5rem;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #2196f3;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-content button:hover {
+    background-color: #1976d2;
+  }
+  
+  #offline-status-game {
+    color: red;
+    font-weight: bold;
+  }
+  
+  /* ============================================
+     Styles for Results page
+     ============================================ */
+  .results-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+  }
+  
+  .results-controls input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .results-controls button {
+    background-color: #009688;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .results-controls button:hover {
+    transform: scale(1.05);
+  }
+  
+  .results-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+  
+  .results-table th,
+  .results-table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .results-table th {
+    background-color: #f2f2f2;
+  }
+  
+  #no-results-msg {
+    text-align: center;
+    font-style: italic;
+  }
+  
+  /* ============================================
+     Responsive adjustments
+     ============================================ */
+  @media (max-width: 600px) {
+    .game-info {
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .game-grid.size-4x4,
+    .game-grid.size-4x6,
+    .game-grid.size-6x6 {
+      max-width: 90vw;
+    }
+    .results-controls {
+      flex-direction: column;
+    }
+    .results-table table,
+    .results-table th,
+    .results-table td {
+      font-size: 0.9rem;
+    }
+  }
+  

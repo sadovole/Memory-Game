@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memory Game — Results</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <h1>Game Results</h1>
+    <button id="back-to-game-btn">Play Again</button>
+    <button id="logout-btn-results">Logout</button>
+  </header>
+
+  <main>
+    <section class="results-controls">
+      <label for="filter-username">Filter by Username:</label>
+      <input type="text" id="filter-username" placeholder="Enter username..." />
+      <button id="export-csv-btn">Export to CSV</button>
+      <button id="clear-history-btn">Clear History</button>
+    </section>
+
+    <section class="results-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Username</th>
+            <th>Moves</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="results-body">
+          <!-- Filled dynamically via JS -->
+        </tbody>
+      </table>
+      <p id="no-results-msg" class="hidden">No saved results.</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; <span id="current-year-results"></span> Memory Game.</p>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/results.js"></script>
+</body>
+</html>
