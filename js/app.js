@@ -1,5 +1,3 @@
-/* js/app.js: General initialization, service worker, auth check, online/offline handling */
-
 $(document).ready(function () {
   // Set current year in footers
   const year = new Date().getFullYear();
@@ -19,7 +17,7 @@ $(document).ready(function () {
   window.addEventListener('offline', updateOnlineStatus);
   updateOnlineStatus();
 
-  // Register service worker for offline caching
+  // Register service worker (may fail on file:// or if not https)
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker
       .register('js/sw.js')
@@ -27,14 +25,33 @@ $(document).ready(function () {
       .catch((err) => console.error('SW registration error:', err));
   }
 
-  // Check if user is logged in (except on index.html)
-  const path = window.location.pathname;
-  const page = path.substring(path.lastIndexOf('/') + 1);
-  const loggedInUser = localStorage.getItem('memoryGameUser');
+  // Determine which “page” we are on
+  let path = window.location.pathname;            // e.g. "/your-repo/" or "/your-repo/index.html"
+  let page = path.substring(path.lastIndexOf('/') + 1);
+  // Handle GH Pages default of serving index when path ends in "/your-repo/"
+  if (page === '' || page === 'your-repo') {
+    page = 'index.html';
+  }
 
+  // If not index.html, check if logged in; otherwise redirect to index.html
+  const loggedInUser = localStorage.getItem('memoryGameUser');
   if (page !== 'index.html' && !loggedInUser) {
-    // Redirect to login if not authorized
     window.location.href = 'index.html';
+  }
+
+  // Geolocation on index (or default) page
+  if (page === 'index.html' && 'geolocation' in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        $('#user-location').text(
+          `Your coordinates: ${latitude.toFixed(2)}, ${longitude.toFixed(2)}`
+        );
+      },
+      (err) => {
+        console.warn('Geolocation error:', err.message);
+      }
+    );
   }
 
   // Logout buttons logic
@@ -43,25 +60,8 @@ $(document).ready(function () {
     window.location.href = 'index.html';
   });
 
-  // Geolocation on index.html page
-  if (page === 'index.html' && 'geolocation' in navigator) {
-    navigator.geolocation.getCurrentPosition(
-      function (position) {
-        const { latitude, longitude } = position.coords;
-        $('#user-location').text(
-          `Your coordinates: ${latitude.toFixed(2)}, ${longitude.toFixed(
-            2
-          )}`
-        );
-      },
-      function (err) {
-        console.warn('Geolocation error:', err.message);
-      }
-    );
-  }
-
-  // Handle back/forward navigation if needed (History API stub)
-  window.addEventListener('popstate', function (event) {
+  // Optional: popstate handling for History (if you need back/forward)
+  window.addEventListener('popstate', (event) => {
     if (page === 'game.html' && location.pathname.endsWith('game.html')) {
       if (!loggedInUser) location.href = 'index.html';
     }
