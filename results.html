@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta 
-    http-equiv="X-UA-Compatible" 
-    content="IE=edge" 
-  />
-  <meta 
-    name="viewport" 
-    content="width=device-width, initial-scale=1.0" 
-  />
+  <meta charset="UTF-8">
+  <meta
+    http-equiv="X-UA-Compatible"
+    content="IE=edge"
+  >
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
   <title>Memory Game — Results</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="site-header">
@@ -29,13 +29,15 @@
   <main class="results-main">
     <!-- Controls: Filter / Export / Clear -->
     <section class="results-controls">
+      <!-- Added heading so that this section has a proper <h2> -->
+      <h2>Results Controls</h2>
       <div class="control-group">
         <label for="filter-username">Filter by Username:</label>
-        <input 
-          type="text" 
-          id="filter-username" 
+        <input
+          type="text"
+          id="filter-username"
           placeholder="Enter username..."
-        />
+        >
       </div>
       <div class="control-group">
         <button id="export-csv-btn" class="btn btn-primary">
@@ -49,6 +51,8 @@
 
     <!-- RESULTS TABLE CARD -->
     <section class="results-table-card">
+      <!-- Added heading so that this section has a proper <h2> -->
+      <h2>Saved Game Results</h2>
       <table class="results-table">
         <thead>
           <tr>
@@ -74,7 +78,7 @@
   </footer>
 
   <!-- jQuery / Scripts -->
-  <script 
+  <script
     src="https://code.jquery.com/jquery-3.6.0.min.js">
   </script>
   <script src="js/app.js"></script>
