@@ -112,59 +112,35 @@
   }
   
 /* ============================================
-   Styles for Game page
+   Styles for Game page (UPDATED)
    ============================================ */
-   .game-info {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  
-  .game-info p,
-  .game-info label {
-    font-size: 1.1rem;
-  }
-  
-  #difficulty-select {
-    padding: 0.3rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-  }
-  
-  .game-board {
+   .game-board {
     display: flex;
     justify-content: center;
   }
   
-  /* Add width:100% so max-width can actually apply */
   .game-grid {
     display: grid;
     gap: 10px;
     width: 100%;
   }
   
-  /* 4×4 grid: four columns, container is 600px wide */
   .game-grid.size-4x4 {
     grid-template-columns: repeat(4, 1fr);
     max-width: 600px;
   }
   
-  /* 4×6 grid: four columns, container is 800px wide */
   .game-grid.size-4x6 {
     grid-template-columns: repeat(4, 1fr);
     max-width: 800px;
   }
   
-  /* 6×6 grid: six columns, container is 900px wide */
   .game-grid.size-6x6 {
     grid-template-columns: repeat(6, 1fr);
     max-width: 900px;
   }
   
-  /* Each card is 100% of its grid‐cell, plus padding-top for square aspect */
+  /* Each card is a square, occupies one grid cell */
   .card {
     position: relative;
     width: 100%;
@@ -173,12 +149,13 @@
     cursor: pointer;
   }
   
+  /* Keep the 3D flip inner container */
   .card__inner {
     position: absolute;
     top: 0;
-    right: 0;
-    bottom: 0;
     left: 0;
+    bottom: 0;
+    right: 0;
     transform-style: preserve-3d;
     transition: transform 0.6s;
   }
@@ -197,12 +174,13 @@
   }
   
   .card__face--front {
-    background-color: #2196f3;
+    background-color: #040506; /* blue back of card */
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
+  /* The face‐up side: inline SVG inserted dynamically */
   .card__face--back {
     background-color: #fff;
     transform: rotateY(180deg);
@@ -212,9 +190,16 @@
     border: 2px solid #444;
   }
   
-  .card__face--back img {
-    width: 60%;
-    height: 60%;
+  /* Constrain inline SVG size exactly like before */
+  .card__face--back svg {
+    width: 60%;     /* 60% of the card’s width */
+    height: 60%;    /* 60% of the card’s height */
+    object-fit: contain;
+  }
+  
+
+  .hidden-card {
+    visibility: hidden; /* hides the card but keeps its space */
   }
   
   /* ============================================
@@ -240,3 +225,133 @@
     }
   }
   
+
+
+/* ============================================
+   Styles for Matched Zone (Drag & Drop) 
+   ============================================ */
+   .matched-zone-section {
+    margin: 1rem auto;
+    max-width: 600px;
+    text-align: center;
+  }
+  
+  #matched-zone {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-height: 100px;
+    border: 2px dashed #888;
+    padding: 0.5rem;
+    background-color: #f9f9f9;
+    transition: background-color 0.2s ease;
+  }
+  
+  #matched-zone.over {
+    background-color: #e0ffe0; /* highlight on dragover */
+  }
+  
+  /* Force cards in matched‐zone to be the same small size */
+  #matched-zone .card {
+    width: 100px;         /* fixed width, */
+    padding-top: 100px;   
+    position: relative;
+    cursor: default;
+    perspective: 1000px;
+  }
+  
+  #matched-zone .card .card__inner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+  
+  #matched-zone .card .card__face,
+  #matched-zone .card .card__face--back,
+  #matched-zone .card .card__face--front {
+    /* overrideInside matched-zone to ensure faces fill the 100px square */
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  #matched-zone .card__face--front {
+    background-color: #2196f3;
+  }
+  #matched-zone .card__face--back {
+    background-color: #fff;
+    border: 2px solid #444;
+    transform: rotateY(180deg);
+  }
+  
+  /* Inline SVG still 60% inside matched-zone cards */
+  #matched-zone .card__face--back svg {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+  }
+  
+  /* When a card is archived (dropped here), we can dim it further if desired */
+  #matched-zone .card.archived {
+    opacity: 0.6;
+  }
+
+/* ============================= */
+/* Chat Section (WebSocket stub) */
+/* ============================= */
+.chat-section {
+  margin: 1rem auto;
+  max-width: 600px;
+  background: #fff;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.chat-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.chat-log {
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  background: #f5f5f5;
+}
+.chat-log p {
+  margin: 0.25rem 0;
+}
+#chat-input {
+  width: calc(100% - 80px);
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+#chat-send-btn {
+  width: 60px;
+  margin-left: 0.5rem;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 0.4rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#chat-send-btn:hover {
+  background-color: #1976d2;
+}
+
+/* ============================= */
+/* Inline SVG Container (optional styling) */
+/* ============================= */
+.svg-container svg {
+  width: 60%;
+  height: 60%;
+  transition: filter 0.2s; /* for highlight effect */
+}

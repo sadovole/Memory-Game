@@ -15,9 +15,7 @@
 
   <main>
     <section class="game-info">
-    \
       <h2>Game Controls</h2>
-
       <div>
         <label for="difficulty-select">Difficulty:</label>
         <select id="difficulty-select">
@@ -32,18 +30,21 @@
       <p id="offline-status-game" class="hidden">
         You are offline. Results will not be saved.
       </p>
-
-      <!-- Start Game and Music Toggle buttons -->
       <button id="start-game-btn">Start Game</button>
       <button id="toggle-music-btn">🔈 Music On</button>
     </section>
 
     <section class="game-board">
-\
       <h2>Card Grid</h2>
       <div id="game-grid" class="game-grid"></div>
     </section>
 
+    <section class="matched-zone-section">
+      <h2>Matched Pairs (Drag Here)</h2>
+      <div id="matched-zone" class="matched-zone"></div>
+    </section>
+
+    <!-- Modal shown when game ends -->
     <div id="game-over-modal" class="modal hidden">
       <div class="modal-content">
         <h2>Game Over!</h2>
@@ -54,7 +55,15 @@
       </div>
     </div>
 
-    <!-- Audio elements (no trailing slashes) -->
+    <!-- Chat area (WebSocket stub) -->
+    <section class="chat-section">
+      <h2>Game Chat (Multiplayer Stub)</h2>
+      <div id="chat-log" class="chat-log"></div>
+      <input type="text" id="chat-input" placeholder="Type a message...">
+      <button id="chat-send-btn">Send</button>
+    </section>
+
+    <!-- Audio elements -->
     <audio id="flip-sound" src="assets/audio/flip.mp3" preload="auto"></audio>
     <audio id="match-sound" src="assets/audio/match.mp3" preload="auto"></audio>
     <audio id="bg-music" src="assets/audio/background.mp3" loop></audio>
@@ -63,6 +72,11 @@
   <footer>
     <p>&copy; <span id="current-year-game"></span> Memory Game.</p>
   </footer>
+
+  <!-- Template for dynamic SVG insertion -->
+  <template id="svg-template">
+    <div class="svg-container"></div>
+  </template>
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="js/app.js"></script>
