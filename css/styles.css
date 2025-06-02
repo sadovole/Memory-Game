@@ -1,14 +1,7 @@
 /* ============================================
-   Hiding class — ensures elements with 'hidden' are not visible
+   Global Reset & Basic Styles
    ============================================ */
-   .hidden {
-    display: none !important;
-  }
-  
-  /* ============================================
-     Global styles
-     ============================================ */
-  * {
+   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -20,6 +13,13 @@
     background-color: #f5f5f5;
   }
   
+  .hidden {
+    display: none !important;
+  }
+  
+  /* ============================================
+     Header
+     ============================================ */
   .site-header {
     background-color: #444;
     color: #fff;
@@ -33,7 +33,12 @@
     font-size: 1.5rem;
   }
   
-  .site-header button {
+  .header-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .header-buttons button {
     background: #ff9800;
     border: none;
     color: #fff;
@@ -43,14 +48,13 @@
     transition: transform 0.2s ease-in-out;
   }
   
-  .site-header button:hover {
+  .header-buttons button:hover {
     transform: scale(1.05);
   }
   
-  main {
-    padding: 1rem;
-  }
-  
+  /* ============================================
+     Footer
+     ============================================ */
   footer {
     text-align: center;
     padding: 1rem;
@@ -58,7 +62,7 @@
   }
   
   /* ============================================
-     Styles for Login/Register form
+     Login / Register Form
      ============================================ */
   .auth-section {
     max-width: 400px;
@@ -111,51 +115,100 @@
     margin-top: 1rem;
   }
   
-/* ============================================
-   Styles for Game page (UPDATED)
-   ============================================ */
-   .game-board {
+  /* ============================================
+     Main Three‐Column Layout
+     ============================================ */
+  .game-main-container {
     display: flex;
+    gap: 20px;               /* space between columns */
+    align-items: flex-start;
     justify-content: center;
+    padding: 1rem;
   }
   
+  /* Left Column: Game Info Panel */
+  .game-info-container {
+    flex: 0 0 250px;         /* fixed width */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .game-info-container h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .game-info-container .game-info {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    width: 100%;
+  }
+  
+  .game-info-container label {
+    font-weight: bold;
+  }
+  
+  .game-info-container button {
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+  
+  /* Center Column: Card Grid, Matched Zone, and Rules */
+  .center-container {
+    flex: 0 0 auto;          /* width determined by content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  /* Card Grid Heading */
+  .center-container h2 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* ============================================
+     Card Grid Styles
+     ============================================ */
   .game-grid {
     display: grid;
     gap: 10px;
-    width: 100%;
   }
   
+  /* 4×4: Each card is 100px, 3 gaps × 10px → 430px total */
   .game-grid.size-4x4 {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 600px;
+    grid-template-columns: repeat(4, 100px);
   }
   
+  /* 4×6: Each card is 80px, 3 gaps × 10px → 350px total */
   .game-grid.size-4x6 {
-    grid-template-columns: repeat(4, 1fr);
-    max-width: 800px;
+    grid-template-columns: repeat(4, 80px);
   }
   
+  /* 6×6: Each card is 60px, 5 gaps × 10px → 410px total */
   .game-grid.size-6x6 {
-    grid-template-columns: repeat(6, 1fr);
-    max-width: 900px;
+    grid-template-columns: repeat(6, 60px);
   }
   
-  /* Each card is a square, occupies one grid cell */
+  /* Each card occupies its grid cell and keeps a 1:1 ratio */
   .card {
     position: relative;
-    width: 100%;
-    padding-top: 100%; /* 1:1 aspect ratio */
+    width: 100%;           /* cell width defined by grid */
+    padding-top: 100%;     /* 1:1 square aspect ratio */
     perspective: 1000px;
     cursor: pointer;
   }
   
-  /* Keep the 3D flip inner container */
+  /* Flip animation container */
   .card__inner {
     position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     transform-style: preserve-3d;
     transition: transform 0.6s;
   }
@@ -164,6 +217,7 @@
     transform: rotateY(180deg);
   }
   
+  /* Both faces of the card */
   .card__face {
     position: absolute;
     width: 100%;
@@ -173,14 +227,15 @@
     overflow: hidden;
   }
   
+  /* Face-down side */
   .card__face--front {
-    background-color: #040506; /* blue back of card */
+    background-color: #2196f3;
     display: flex;
     justify-content: center;
     align-items: center;
   }
   
-  /* The face‐up side: inline SVG inserted dynamically */
+  /* Face-up side (contains inline SVG) */
   .card__face--back {
     background-color: #fff;
     transform: rotateY(180deg);
@@ -190,168 +245,252 @@
     border: 2px solid #444;
   }
   
-  /* Constrain inline SVG size exactly like before */
+  /* Inline SVG icon inside the card face */
   .card__face--back svg {
-    width: 60%;     /* 60% of the card’s width */
-    height: 60%;    /* 60% of the card’s height */
+    width: 60%;
+    height: 60%;
     object-fit: contain;
   }
   
-
+  /* Hide a matched card in the grid without collapsing its spot */
   .hidden-card {
-    visibility: hidden; /* hides the card but keeps its space */
+    visibility: hidden;
   }
   
-  /* ============================================
-     Responsive adjustments
-     ============================================ */
-  @media (max-width: 600px) {
-    .game-info {
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .game-grid.size-4x4,
-    .game-grid.size-4x6,
-    .game-grid.size-6x6 {
-      max-width: 90vw;
-    }
-    .results-controls {
-      flex-direction: column;
-    }
-    .results-table table,
-    .results-table th,
-    .results-table td {
-      font-size: 0.9rem;
-    }
-  }
-  
-
-
-/* ============================================
-   Styles for Matched Zone (Drag & Drop) 
-   ============================================ */
-   .matched-zone-section {
-    margin: 1rem auto;
-    max-width: 600px;
-    text-align: center;
-  }
-  
-  #matched-zone {
+/* ==================================================
+   Matched Pairs (Drag Here) area – fixed clone sizes
+   ================================================== */
+   #matched-zone {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    min-height: 100px;
-    border: 2px dashed #888;
-    padding: 0.5rem;
+    flex-wrap: wrap;          
+    gap: 10px;                  
     background-color: #f9f9f9;
-    transition: background-color 0.2s ease;
+    border: 2px dashed #888;
+    padding: 0.5rem;            
+    align-items: flex-start;     
+    justify-content: flex-start; 
+    box-sizing: border-box;
+  
+    /* When empty: one‐card‐height tall (100px) + 1rem padding = 100px + 16px */
+    min-height: calc(100px + 1rem);
+  
+
+    margin: 0 auto 1rem;
   }
   
+  /* Highlight on drag‐over */
   #matched-zone.over {
-    background-color: #e0ffe0; /* highlight on dragover */
+    background-color: #e0ffe0;
   }
   
-  /* Force cards in matched‐zone to be the same small size */
+
   #matched-zone .card {
-    width: 100px;         /* fixed width, */
-    padding-top: 100px;   
+    padding-top: 0 !important;
+  }
+  
+  /* ==================================================
+     4×4 Difficulty (Default)
+     width = 4×100px + 3×10px gaps = 430px
+     ================================================== */
+  #matched-zone.size-4x4 {
+    width: 430px;
+    max-width: 430px;
+  }
+  
+  /* Each cloned card = 100×100 inside 4×4 matched‐zone */
+  #matched-zone.size-4x4 .card {
+    width: 100px;
+    height: 100px;
+  }
+  
+  /* ==================================================
+     4×6 Difficulty
+     width = 4×80px + 3×10px gaps = 350px
+     ================================================== */
+  #matched-zone.size-4x6 {
+    width: 350px;
+    max-width: 350px;
+  }
+  
+  /* Each cloned card = 80×80 inside 4×6 matched‐zone */
+  #matched-zone.size-4x6 .card {
+    width: 80px;
+    height: 80px;
+  }
+  
+  /* ==================================================
+     6×6 Difficulty
+     width = 6×60px + 5×10px gaps = 410px
+     ================================================== */
+  #matched-zone.size-6x6 {
+    width: 410px;
+    max-width: 410px;
+  }
+  
+  /* Each cloned card = 60×60 inside 6×6 matched‐zone */
+  #matched-zone.size-6x6 .card {
+    width: 60px;
+    height: 60px;
+  }
+  
+  /* ===================================
+     Common Styles for Cloned Cards
+     =================================== */
+  #matched-zone .card {
     position: relative;
     cursor: default;
     perspective: 1000px;
   }
   
-  #matched-zone .card .card__inner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-  }
-  
+  #matched-zone .card .card__inner,
   #matched-zone .card .card__face,
   #matched-zone .card .card__face--back,
   #matched-zone .card .card__face--front {
-    /* overrideInside matched-zone to ensure faces fill the 100px square */
     width: 100%;
     height: 100%;
-    border-radius: 8px;
-    overflow: hidden;
   }
   
-  #matched-zone .card__face--front {
-    background-color: #2196f3;
-  }
-  #matched-zone .card__face--back {
-    background-color: #fff;
-    border: 2px solid #444;
-    transform: rotateY(180deg);
-  }
-  
-  /* Inline SVG still 60% inside matched-zone cards */
+  /* Keep inline SVG inside the clone at 60% */
   #matched-zone .card__face--back svg {
     width: 60%;
     height: 60%;
     object-fit: contain;
   }
   
-  /* When a card is archived (dropped here), we can dim it further if desired */
+  /* Dim archived clones slightly */
   #matched-zone .card.archived {
     opacity: 0.6;
   }
-
-/* ============================= */
-/* Chat Section (WebSocket stub) */
-/* ============================= */
-.chat-section {
-  margin: 1rem auto;
-  max-width: 600px;
-  background: #fff;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-}
-.chat-section h2 {
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-.chat-log {
-  max-height: 150px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  background: #f5f5f5;
-}
-.chat-log p {
-  margin: 0.25rem 0;
-}
-#chat-input {
-  width: calc(100% - 80px);
-  padding: 0.4rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-#chat-send-btn {
-  width: 60px;
-  margin-left: 0.5rem;
-  background-color: #2196f3;
-  color: white;
-  border: none;
-  padding: 0.4rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
-#chat-send-btn:hover {
-  background-color: #1976d2;
-}
-
-/* ============================= */
-/* Inline SVG Container (optional styling) */
-/* ============================= */
-.svg-container svg {
-  width: 60%;
-  height: 60%;
-  transition: filter 0.2s; /* for highlight effect */
-}
+  /* ===================================
+     Common rules for cloned cards
+     =================================== */
+  #matched-zone .card {
+    position: relative;
+    cursor: default;
+    perspective: 1000px;
+  }
+  
+  #matched-zone .card .card__inner,
+  #matched-zone .card .card__face,
+  #matched-zone .card .card__face--back,
+  #matched-zone .card .card__face--front {
+    width: 100%;
+    height: 100%;
+  }
+  
+  /* Keep SVG inside the clone at 60% of its parent */
+  #matched-zone .card__face--back svg {
+    width: 60%;
+    height: 60%;
+    object-fit: contain;
+  }
+  
+  /* Dim archived clones slightly */
+  #matched-zone .card.archived {
+    opacity: 0.6;
+  }
+  
+  /* ============================================
+     Game Rules (Below Matched Zone)
+     ============================================ */
+  .game-rules {
+    max-width: 500px;
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    font-size: 0.95rem;
+    text-align: left;
+  }
+  
+  .game-rules h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* ============================================
+     Right Column: Chat Section
+     ============================================ */
+  .chat-container {
+    flex: 0 0 250px;       /* fixed width */
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .chat-container h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+  
+  .chat-log {
+    flex: 1;
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 0.5rem;
+    background: #f5f5f5;
+    margin-bottom: 0.5rem;
+  }
+  
+  .chat-log p {
+    margin: 0.25rem 0;
+  }
+  
+  .chat-input-area {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  #chat-input {
+    flex: 1;
+    padding: 0.4rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #chat-send-btn {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #chat-send-btn:hover {
+    background-color: #1976d2;
+  }
+  
+  /* ============================================
+     Responsive Adjustments
+     ============================================ */
+  @media (max-width: 600px) {
+    .game-main-container {
+      flex-direction: column;
+      gap: 10px;
+    }
+    .game-info-container,
+    .chat-container {
+      flex: 1 0 auto;
+      max-width: 100%;
+    }
+    .game-grid.size-4x4,
+    .game-grid.size-4x6,
+    .game-grid.size-6x6 {
+      max-width: 90vw;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+    .matched-zone.size-4x4,
+    .matched-zone.size-4x6,
+    .matched-zone.size-6x6 {
+      width: 90vw !important;
+      margin: 0 auto;
+    }
+    .matched-zone {
+      justify-content: center;
+    }
+  }

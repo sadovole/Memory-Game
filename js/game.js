@@ -541,6 +541,13 @@ $(function() {
     $(this).prop('disabled', true);
   });
 
+
+
+  //Results button in the header
+  $('#go-to-results-btn').on('click', function() {
+    window.location.href = 'results.html';
+  });
+
   // Music toggle button
   $('#toggle-music-btn').on('click', function() {
     if (game.bgMusic.paused) {
@@ -576,25 +583,42 @@ $(function() {
     window.location.reload();
   });
 
-  // Difficulty select change
-  $('#difficulty-select').on('change', function() {
-    if (game.gameStarted) {
-      $(this).prop('disabled', true);
-      return;
-    }
-    var val = $(this).val(); // "4x4", "4x6", "6x6"
-    var rows = 4, cols = 4;
-    if (val === '4x4') {
-      rows = 4; cols = 4;
-    } else if (val === '4x6') {
-      rows = 4; cols = 6;
-    } else if (val === '6x6') {
-      rows = 6; cols = 6;
-    }
-    game.loadGridSize(rows, cols);
-    $('#move-count').text('0');
-  });
+// Difficulty select change
+$('#difficulty-select').on('change', function() {
+  if (game.gameStarted) {
+    $(this).prop('disabled', true);
+    return;
+  }
 
+  var val = $(this).val(); // "4x4", "4x6", "6x6"
+  var rows = 4, cols = 4;
+  var sizeClass = 'size-4x4'; // default
+
+  if (val === '4x4') {
+    rows = 4; 
+    cols = 4;
+    sizeClass = 'size-4x4';
+  } else if (val === '4x6') {
+    rows = 4; 
+    cols = 6;
+    sizeClass = 'size-4x6';
+  } else if (val === '6x6') {
+    rows = 6; 
+    cols = 6;
+    sizeClass = 'size-6x6';
+  }
+
+  // Rebuild game grid at the new size
+  game.loadGridSize(rows, cols);
+
+  // Reset the move counter display
+  $('#move-count').text('0');
+
+  // Update #matched-zone to have exactly one size class
+  $('#matched-zone')
+    .removeClass('size-4x4 size-4x6 size-6x6')
+    .addClass(sizeClass);
+});
   // Chat: send stub message via WebSocket
   $('#chat-send-btn').on('click', function() {
     var msg = $('#chat-input').val().trim();

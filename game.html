@@ -10,13 +10,18 @@
 <body>
   <header class="site-header">
     <h1>Memory Game</h1>
-    <button id="logout-btn">Logout</button>
+    <div class="header-buttons">
+      <!-- Added Results button next to Logout -->
+      <button id="go-to-results-btn">Results</button>
+      <button id="logout-btn">Logout</button>
+    </div>
   </header>
 
-  <main>
-    <section class="game-info">
+  <main class="game-main-container">
+    <!-- Left column: Game Info -->
+    <aside class="game-info-container">
       <h2>Game Controls</h2>
-      <div>
+      <div class="game-info">
         <label for="difficulty-select">Difficulty:</label>
         <select id="difficulty-select">
           <option value="4x4" selected>4 × 4 (8 Pairs)</option>
@@ -24,54 +29,70 @@
           <option value="6x6">6 × 6 (18 Pairs)</option>
         </select>
       </div>
-      <p>Player: <span id="player-name"></span></p>
-      <p>Moves: <span id="move-count">0</span></p>
-      <p>Time: <span id="timer">00:00</span></p>
+      <div class="game-info">
+        <span>Player: <strong id="player-name"></strong></span>
+      </div>
+      <div class="game-info">
+        <span>Moves: <strong id="move-count">0</strong></span>
+      </div>
+      <div class="game-info">
+        <span>Time: <strong id="timer">00:00</strong></span>
+      </div>
       <p id="offline-status-game" class="hidden">
         You are offline. Results will not be saved.
       </p>
       <button id="start-game-btn">Start Game</button>
       <button id="toggle-music-btn">🔈 Music On</button>
-    </section>
+    </aside>
 
-    <section class="game-board">
+    <!-- Center column: Card Grid + Matched Zone + Rules -->
+    <section class="center-container">
       <h2>Card Grid</h2>
-      <div id="game-grid" class="game-grid"></div>
+      <div id="game-grid" class="game-grid size-4x4"></div>
+
+      <section class="matched-zone-section">
+        <h2>Matched Pairs (Drag Here)</h2>
+        <div id="matched-zone" class="matched-zone size-4x4"></div>
+      </section>
+
+      <section class="game-rules">
+        <h2>How to Play</h2>
+        <p>
+          1. Click “Start Game” to begin. All cards briefly flip face‐up for 5 seconds.<br>
+          2. After 5 seconds, cards flip back and the timer starts. Click any two cards to flip them over.<br>
+          3. If the two cards match, they remain face‐up and you can drag one of them into the “Matched Pairs” area. The other matching card will vanish from the grid (leaving an empty slot).<br>
+          4. If they do not match, they flip face‐down again after one second.<br>
+          5. The game ends when all pairs are matched. You can then save your result or play again.
+        </p>
+      </section>
     </section>
 
-    <section class="matched-zone-section">
-      <h2>Matched Pairs (Drag Here)</h2>
-      <div id="matched-zone" class="matched-zone"></div>
-    </section>
-
-    <!-- Modal shown when game ends -->
-    <div id="game-over-modal" class="modal hidden">
-      <div class="modal-content">
-        <h2>Game Over!</h2>
-        <p>Your Time: <span id="final-time"></span></p>
-        <p>Your Moves: <span id="final-moves"></span></p>
-        <button id="save-result-btn">Save Result</button>
-        <button id="play-again-btn">Play Again</button>
-      </div>
-    </div>
-
-    <!-- Chat area (WebSocket stub) -->
-    <section class="chat-section">
-      <h2>Game Chat (Multiplayer Stub)</h2>
+    <!-- Right column: Chat Section -->
+    <aside class="chat-container">
+      <h2>Game Chat</h2>
       <div id="chat-log" class="chat-log"></div>
-      <input type="text" id="chat-input" placeholder="Type a message...">
-      <button id="chat-send-btn">Send</button>
-    </section>
-
-    <!-- Audio elements -->
-    <audio id="flip-sound" src="assets/audio/flip.mp3" preload="auto"></audio>
-    <audio id="match-sound" src="assets/audio/match.mp3" preload="auto"></audio>
-    <audio id="bg-music" src="assets/audio/background.mp3" loop></audio>
+      <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Type a message…">
+        <button id="chat-send-btn">Send</button>
+      </div>
+    </aside>
   </main>
 
-  <footer>
-    <p>&copy; <span id="current-year-game"></span> Memory Game.</p>
-  </footer>
+  <!-- Modal shown when game ends -->
+  <div id="game-over-modal" class="modal hidden">
+    <div class="modal-content">
+      <h2>Game Over!</h2>
+      <p>Your Time: <span id="final-time"></span></p>
+      <p>Your Moves: <span id="final-moves"></span></p>
+      <button id="save-result-btn">Save Result</button>
+      <button id="play-again-btn">Play Again</button>
+    </div>
+  </div>
+
+  <!-- Audio elements -->
+  <audio id="flip-sound" src="assets/audio/flip.mp3" preload="auto"></audio>
+  <audio id="match-sound" src="assets/audio/match.mp3" preload="auto"></audio>
+  <audio id="bg-music" src="assets/audio/background.mp3" loop></audio>
 
   <!-- Template for dynamic SVG insertion -->
   <template id="svg-template">
