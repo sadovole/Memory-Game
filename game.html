@@ -78,16 +78,20 @@
     </aside>
   </main>
 
-  <!-- Modal shown when game ends -->
-  <div id="game-over-modal" class="modal hidden">
-    <div class="modal-content">
-      <h2>Game Over!</h2>
-      <p>Your Time: <span id="final-time"></span></p>
-      <p>Your Moves: <span id="final-moves"></span></p>
-      <button id="save-result-btn">Save Result</button>
-      <button id="play-again-btn">Play Again</button>
+<!-- ==============================================
+     Modal Overlay (initially hidden)
+     ============================================== -->
+     <div id="game-over-overlay" class="overlay hidden">
+      <div class="modal-content">
+        <h2>Game Over!</h2>
+        <p>Your Time: <span id="final-time"></span></p>
+        <p>Your Moves: <span id="final-moves"></span></p>
+        <div class="modal-buttons">
+          <button id="save-result-btn" class="btn btn-primary">Save Result</button>
+          <button id="play-again-btn" class="btn btn-secondary">Play Again</button>
+        </div>
+      </div>
     </div>
-  </div>
 
   <!-- Audio elements -->
   <audio id="flip-sound" src="assets/audio/flip.mp3" preload="auto"></audio>

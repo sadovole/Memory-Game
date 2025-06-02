@@ -1,5 +1,3 @@
-/* js/results.js: Displaying and managing game results */
-
 $(function () {
   const username = localStorage.getItem('memoryGameUser');
   if (!username) {
@@ -7,25 +5,21 @@ $(function () {
     return;
   }
 
-  /**
-   * Load results array from LocalStorage
-   */
   function loadResults() {
     return JSON.parse(localStorage.getItem('memoryGameResults') || '[]');
   }
 
-  /**
-   * Render results table, optionally filtering by username substring.
-   * @param {string} filter
-   */
   function renderResults(filter = '') {
-    const allResults = loadResults();
+    let allResults = loadResults();
     let filtered = allResults;
+
     if (filter) {
+      const lower = filter.toLowerCase();
       filtered = allResults.filter((r) =>
-        r.username.toLowerCase().includes(filter.toLowerCase())
+        r.username.toLowerCase().includes(lower)
       );
     }
+
     const tbody = $('#results-body');
     tbody.empty();
 
@@ -36,25 +30,28 @@ $(function () {
       $('#no-results-msg').addClass('hidden');
     }
 
-    // Sort descending by date
+    // Sort by date descending
     filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     filtered.forEach((r) => {
-      const date = new Date(r.date).toLocaleString();
-      const row = `<tr>
-        <td>${date}</td>
-        <td>${r.username}</td>
-        <td>${r.moves}</td>
-        <td>${r.time}</td>
-      </tr>`;
-      tbody.append(row);
+      const dateStr = new Date(r.date).toLocaleString();
+      
+      const rowHtml = `
+        <tr>
+          <td>${dateStr}</td>
+          <td>${r.username}</td>
+          <td>${r.difficulty || '—'}</td> <!-- Сложность -->
+          <td>${r.moves ?? '—'}</td>     <!-- Ходы -->
+          <td>${r.time || '—'}</td>      <!-- Время -->
+        </tr>`;
+      tbody.append(rowHtml);
     });
   }
 
-  // Initial render
+  // Initial display
   renderResults();
 
-  // Live filtering
+  // Filter as the user types
   $('#filter-username').on('input', function () {
     renderResults($(this).val());
   });
@@ -63,21 +60,22 @@ $(function () {
   $('#clear-history-btn').on('click', function () {
     if (confirm('Are you sure you want to delete all results?')) {
       localStorage.removeItem('memoryGameResults');
-      renderResults();
+      renderResults($('#filter-username').val());
     }
   });
 
-  // Export to CSV using File API
+  // Export to CSV, now including “Difficulty” in the header
   $('#export-csv-btn').on('click', function () {
     const results = loadResults();
     if (results.length === 0) {
       alert('No data to export.');
       return;
     }
-    let csvContent = 'Date,Username,Moves,Time\n';
+    let csvContent = 'Date,Username,Difficulty,Moves,Time\n';
     results.forEach((r) => {
-      const date = new Date(r.date).toLocaleString();
-      csvContent += `${date},${r.username},${r.moves},${r.time}\n`;
+      const dateStr = new Date(r.date).toLocaleString();
+      const diff = r.difficulty || '';
+      csvContent += `${dateStr},${r.username},${diff},${r.moves},${r.time}\n`;
     });
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = URL.createObjectURL(blob);
@@ -92,5 +90,11 @@ $(function () {
   // Back to game
   $('#back-to-game-btn').on('click', function () {
     window.location.href = 'game.html';
+  });
+
+  // Logout
+  $('#logout-btn-results').on('click', function () {
+    localStorage.removeItem('memoryGameUser');
+    window.location.href = 'index.html';
   });
 });

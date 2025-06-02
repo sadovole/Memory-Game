@@ -288,20 +288,20 @@ MemoryGame.prototype.flipCard = function(cardObj) {
 MemoryGame.prototype.endGame = function() {
   clearInterval(this.timer);
   this.gameOver = true;
+
+  // Update stats:
   $('#final-time').text(this.timerElem.textContent);
   $('#final-moves').text(this.moves);
-  $('#game-over-modal').removeClass('hidden');
 
-  if (Notification.permission === 'granted') {
-    var notification = new Notification('Memory Game Completed!', {
-      body: 'You finished in ' + this.moves + ' moves and ' + this.timerElem.textContent + '.',
-      icon: 'assets/svg/icon1.svg'
-    });
-    setTimeout(function() {
-      notification.close();
-    }, 5000);
-  }
+  // Show the overlay by removing 'hidden'
+  $('#game-over-overlay').removeClass('hidden');
 };
+
+// And your “Play Again” button:
+$('#play-again-btn').on('click', function() {
+  $('#game-over-overlay').addClass('hidden');  // hide it again
+  window.location.reload();                     // or reset state
+});
 
 // Drag & Drop: when a drag starts on a card
 MemoryGame.prototype.onDragStart = function(ev, cardObj) {
@@ -562,15 +562,25 @@ $(function() {
   });
 
   // Save Result button
-  $('#save-result-btn').on('click', function() {
+  $('#save-result-btn').on('click', function () {
     if (navigator.onLine) {
-      var results = JSON.parse(localStorage.getItem('memoryGameResults') || '[]');
+      const results = JSON.parse(localStorage.getItem('memoryGameResults') || '[]');
+  
+      // Получаем текстовое представление сложности
+      const rawDiff = $('#difficulty-select').val();
+      let difficultyLabel = '4 × 4';
+      if (rawDiff === '4x6') difficultyLabel = '4 × 6';
+      else if (rawDiff === '6x6') difficultyLabel = '6 × 6';
+  
+      // Исправленный объект результатов
       results.push({
         date: new Date().toISOString(),
         username: username,
-        moves: game.moves,
-        time: game.timerElem.textContent
+        difficulty: difficultyLabel,  // сложность как строка
+        moves: game.moves,            // число ходов
+        time: game.timerElem.textContent // время как строка "мм:сс"
       });
+  
       localStorage.setItem('memoryGameResults', JSON.stringify(results));
       window.location.href = 'results.html';
     } else {

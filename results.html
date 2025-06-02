@@ -1,37 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta 
+    http-equiv="X-UA-Compatible" 
+    content="IE=edge" 
+  />
+  <meta 
+    name="viewport" 
+    content="width=device-width, initial-scale=1.0" 
+  />
   <title>Memory Game — Results</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <h1>Game Results</h1>
-    <button id="back-to-game-btn">Play Again</button>
-    <button id="logout-btn-results">Logout</button>
+    <div class="header-buttons">
+      <button id="back-to-game-btn" class="btn btn-secondary">
+        ← Play Again
+      </button>
+      <button id="logout-btn-results" class="btn btn-secondary">
+        Logout
+      </button>
+    </div>
   </header>
 
-  <main>
+  <main class="results-main">
+    <!-- Controls: Filter / Export / Clear -->
     <section class="results-controls">
-     
-      <h2>Filter & Export</h2>
-      <label for="filter-username">Filter by Username:</label>
-      <input type="text" id="filter-username" placeholder="Enter username...">
-      <button id="export-csv-btn">Export to CSV</button>
-      <button id="clear-history-btn">Clear History</button>
+      <div class="control-group">
+        <label for="filter-username">Filter by Username:</label>
+        <input 
+          type="text" 
+          id="filter-username" 
+          placeholder="Enter username..."
+        />
+      </div>
+      <div class="control-group">
+        <button id="export-csv-btn" class="btn btn-primary">
+          Export to CSV
+        </button>
+        <button id="clear-history-btn" class="btn btn-danger">
+          Clear History
+        </button>
+      </div>
     </section>
 
-    <section class="results-table">
-     
-      <h2>All Saved Results</h2>
-      <table>
+    <!-- RESULTS TABLE CARD -->
+    <section class="results-table-card">
+      <table class="results-table">
         <thead>
           <tr>
             <th>Date</th>
             <th>Username</th>
+            <th>Difficulty</th>
             <th>Moves</th>
             <th>Time</th>
           </tr>
@@ -40,7 +63,9 @@
           <!-- Filled dynamically via JS -->
         </tbody>
       </table>
-      <p id="no-results-msg" class="hidden">No saved results.</p>
+      <p id="no-results-msg" class="no-results hidden">
+        No saved results.
+      </p>
     </section>
   </main>
 
@@ -48,7 +73,10 @@
     <p>&copy; <span id="current-year-results"></span> Memory Game.</p>
   </footer>
 
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- jQuery / Scripts -->
+  <script 
+    src="https://code.jquery.com/jquery-3.6.0.min.js">
+  </script>
   <script src="js/app.js"></script>
   <script src="js/results.js"></script>
 </body>

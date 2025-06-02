@@ -494,3 +494,229 @@
       justify-content: center;
     }
   }
+
+
+
+  /* ====================================================
+   Overlay & Modal for “Game Over”
+   ==================================================== */
+
+/* 1) Full‐screen overlay that covers the entire viewport */
+#game-over-overlay.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;               /* full browser width */
+  height: 100vh;              /* full browser height */
+  background-color: rgba(0, 0, 0, 0.4); /* semi‐transparent black */
+  display: flex;
+  align-items: center;        /* vertical center */
+  justify-content: center;    /* horizontal center */
+  z-index: 9999;              /* on top of everything else */
+  
+  /* Blur the backdrop behind the overlay (modern browsers only); */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); /* Safari support */
+}
+
+/* 2) Hide by default */
+#game-over-overlay.hidden {
+  display: none;
+}
+
+/* 3) Modal “card” inside the overlay */
+#game-over-overlay .modal-content {
+  background-color: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  max-width: 90%;
+  width: 400px;               /* fixed width, but responsive up to 90vw */
+  text-align: center;         /* center text inside */
+  position: relative;
+}
+
+/* 4) Headings and paragraphs inside the modal */
+#game-over-overlay .modal-content h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+#game-over-overlay .modal-content p {
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  color: #555;
+}
+
+/* 5) Button container for Save / Play Again */
+#game-over-overlay .modal-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+/* 6) Generic button styles */
+#game-over-overlay .modal-buttons .btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+}
+
+/* 7) Primary button (Save Result) */
+#game-over-overlay .modal-buttons .btn-primary {
+  background-color: #2196F3;    /* blue */
+  color: white;
+}
+#game-over-overlay .modal-buttons .btn-primary:hover {
+  background-color: #1976D2;    /* darker blue */
+  transform: translateY(-1px);
+}
+
+/* 8) Secondary button (Play Again) */
+#game-over-overlay .modal-buttons .btn-secondary {
+  background-color: #E0E0E0;    /* light gray */
+  color: #333;
+}
+#game-over-overlay .modal-buttons .btn-secondary:hover {
+  background-color: #BDBDBD;    /* darker gray */
+  transform: translateY(-1px);
+}
+
+
+/* ======================================================
+   RESULTS PAGE STYLING
+   ====================================================== */
+
+/* 1) Container around the table (white card with shadow) */
+.results-table-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  padding: 1rem;
+  margin-bottom: 2rem;
+  overflow-x: auto;  /* allow horizontal scroll on narrow screens */
+}
+
+/* 2) Table base styling */
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* 3) Table header */
+.results-table thead th {
+  background-color: #2196F3; /* blue */
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+/* 4) Table rows */
+.results-table tbody tr {
+  border-bottom: 1px solid #ddd;
+}
+
+.results-table tbody td {
+  padding: 0.6rem 1rem;
+  color: #333;
+}
+
+/* 5) Even/Odd row background striping */
+.results-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* 6) “No results” message */
+.no-results {
+  text-align: center;
+  font-style: italic;
+  color: #777;
+  padding: 1rem 0;
+}
+
+/* 7) Filter & Export/Clear controls (results-controls) */
+.results-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.results-controls .control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.results-controls label {
+  font-weight: bold;
+  color: #333;
+}
+
+.results-controls input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 200px;
+  max-width: 100%;
+}
+
+/* 8) Buttons on this page: Export / Clear / Back / Logout */
+.btn {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease;
+}
+
+.btn-primary {
+  background-color: #2196F3;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #1976D2;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: #E0E0E0;
+  color: #333;
+}
+
+.btn-secondary:hover {
+  background-color: #BDBDBD;
+  transform: translateY(-1px);
+}
+
+.btn-danger {
+  background-color: #F44336;
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #D32F2F;
+  transform: translateY(-1px);
+}
+
+/* 9) Header‐button container on results page */
+.header-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.header-buttons .btn {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+}
