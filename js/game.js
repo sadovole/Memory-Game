@@ -523,7 +523,7 @@ EnhancedMemoryGame.prototype._listenHistoryPopState = function() {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 3) On DOM Ready: instantiate EnhancedMemoryGame and wire up UI buttons
+// 3 DOM : instantiate EnhancedMemoryGame and wire up UI buttons
 // ─────────────────────────────────────────────────────────────────────────────
 
 $(function() {
@@ -566,19 +566,19 @@ $(function() {
     if (navigator.onLine) {
       const results = JSON.parse(localStorage.getItem('memoryGameResults') || '[]');
   
-      // Получаем текстовое представление сложности
+ 
       const rawDiff = $('#difficulty-select').val();
       let difficultyLabel = '4 × 4';
       if (rawDiff === '4x6') difficultyLabel = '4 × 6';
       else if (rawDiff === '6x6') difficultyLabel = '6 × 6';
   
-      // Исправленный объект результатов
+
       results.push({
         date: new Date().toISOString(),
         username: username,
-        difficulty: difficultyLabel,  // сложность как строка
-        moves: game.moves,            // число ходов
-        time: game.timerElem.textContent // время как строка "мм:сс"
+        difficulty: difficultyLabel,  // 
+        moves: game.moves,            
+        time: game.timerElem.textContent 
       });
   
       localStorage.setItem('memoryGameResults', JSON.stringify(results));

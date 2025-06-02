@@ -38,7 +38,7 @@ self.addEventListener('install', function (event) {
     caches.open(CACHE_NAME).then(function (cache) {
       return cache.addAll(urlsToCache).catch(function (err) {
         console.error('One of the cache.addAll() requests failed:', err);
-        // You can also log exactly which URL failed by fetching each URL individually:
+
         return Promise.all(
           urlsToCache.map(function (url) {
             return fetch(url).then(function (res) {
